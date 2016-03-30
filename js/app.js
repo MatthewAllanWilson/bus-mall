@@ -12,19 +12,23 @@ var imageThree = document.createElement('img');
 
 function displayThreeImages (event) {
 
-  var pictureNameOne = pictureArray[getRandomIntInclusive(0, 20)];
+  var pictureNameOne = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)];
   imageOne.setAttribute('src', pictureNameOne.path);
   imageOne.setAttribute('class', pictureNameOne.name);
   document.getElementById('image-one').appendChild(imageOne);
   pictureNameOne.numShown++;
 
-  var pictureNameTwo = pictureArray[getRandomIntInclusive(0, 20)];
+  var pictureNameTwo = pictureNameOne;
+  while (pictureNameTwo === pictureNameOne) {
+    pictureNameTwo = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)]; }
   imageTwo.setAttribute('src', pictureNameTwo.path);
   imageTwo.setAttribute('class', pictureNameTwo.name);
   document.getElementById('image-two').appendChild(imageTwo);
   pictureNameTwo.numShown++;
 
-  var pictureNameThree = pictureArray[getRandomIntInclusive(0, 20)];
+  var pictureNameThree = pictureNameTwo;
+  while (pictureNameThree === pictureNameTwo || pictureNameThree === pictureNameOne) {
+    pictureNameThree = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)]; }
   imageThree.setAttribute('src', pictureNameThree.path);
   imageThree.setAttribute('class', pictureNameThree.name);
   document.getElementById('image-three').appendChild(imageThree);
@@ -36,35 +40,62 @@ function deleteThenDisplay (event) {
   document.getElementById('image-one').removeChild(imageOne);
   document.getElementById('image-two').removeChild(imageTwo);
   document.getElementById('image-three').removeChild(imageThree);
+
+  if (allTheClicks === 25){
+    revealButtons();
+  }
+  else if (allTheClicks === 35){
+    createChart();
+  }
+  else displayThreeImages();
+}
+
+function deleteButtons() {
+  document.getElementById('button-one').removeChild(buttonOne);
+  document.getElementById('button-two').removeChild(buttonTwo);
   displayThreeImages();
 }
 
-// function upTick (event) {
-//   for (var i = 0; i < pictureArray.length; i++) {}
-//
-//  if (pictureArray[i].name === imageOne.className)
-//  }
+function revealButtons(){
+  document.getElementById('button-one').appendChild(buttonOne);
+  buttonOne.textContent = 'SEE RESULTS';
+  document.getElementById('button-two').appendChild(buttonTwo);
+  buttonTwo.textContent = 'MAKE 10 MORE SELECTIONS';
+}
+
+var buttonOne = document.createElement('button');
+buttonOne.addEventListener('click', createChart);
+
+var buttonTwo = document.createElement('button');
+buttonTwo.addEventListener('click', deleteButtons);
+
+function upTick (event) {
+  for (var i = 0; i < pictureArray.length; i++)
+    if (pictureArray[i].name === imageOne.className){
+      pictureArray[i].numClicks++;
+    }
+}
 
 var imageOneClick = document.getElementById('image-one');
-//imageOneClick.addEventListener('click,' upTick)
-//name.numClicks++
+imageOneClick.addEventListener('click', upTick);
 
 var imageTwoClick = document.getElementById('image-two');
-//imageTwoClick.addEventListener('click,' upTick)
-//name.numClicks++
+imageTwoClick.addEventListener('click', upTick);
 
 var imageThreeClick = document.getElementById('image-three');
-//imageThreeClick.addEventListener('click,' upTick)
-//name.numClicks++
+imageThreeClick.addEventListener('click', upTick);
 
 var imageDisplay = document.getElementById('image-display');
 imageDisplay.addEventListener('click', deleteThenDisplay);
+
+var pictureArray = [];
 
 function ImageObject (name, path) {
   this.name = name;
   this.path = path;
   this.numShown = 0;
   this.numClicks = 0;
+  pictureArray.push(this);
 }
 
 var bag = new ImageObject ('bag', 'img/bag.jpg');
@@ -88,6 +119,31 @@ var usb = new ImageObject ('usb', 'img/usb.gif');
 var waterCan = new ImageObject ('waterCan', 'img/water-can.jpg');
 var wineGlass = new ImageObject ('wineGlass', 'img/wine-glass.jpg');
 
-var pictureArray = [bubblegum, bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, usb, waterCan, wineGlass];
+function createChart (){
+
+  var data = {
+    labels: ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Sweep', 'Tauntaun', 'Unicorn', 'USB', 'Water Can', 'Wine Glass'],
+    datasets: [
+      {
+        label: 'Times Shown',
+        fillColor: 'rgba(220,220,220,0.5)',
+        strokeColor: 'rgba(220,220,220,0.8)',
+        highlightFill: 'rgba(220,220,220,0.75)',
+        highlightStroke: 'rgba(220,220,220,1)',
+        data: [bag.numShown, banana.numShown, bathroom.numShown, boots.numShown, breakfast.numShown, bubblegum.numShown, chair.numShown, cthulhu.numShown, dogDuck.numShown, dragon.numShown, pen.numShown, petSweep.numShown, scissors.numShown, shark.numShown, sweep.numShown, tauntaun.numShown, unicorn.numShown, usb.numShown, waterCan.numShown, wineGlass.numShown]
+      },
+      {
+        label: 'Times Clicked',
+        fillColor: 'rgba(151,187,205,0.5)',
+        strokeColor: 'rgba(151,187,205,0.8)',
+        highlightFill: 'rgba(151,187,205,0.75)',
+        highlightStroke: 'rgba(151,187,205,1)',
+        data: [bag.numClicks, banana.numClicks, bathroom.numClicks, boots.numClicks, breakfast.numClicks, bubblegum.numClicks, chair.numClicks, cthulhu.numClicks, dogDuck.numClicks, dragon.numClicks, pen.numClicks, petSweep.numClicks, scissors.numClicks, shark.numClicks, sweep.numClicks, tauntaun.numClicks, unicorn.numClicks, usb.numClicks, waterCan.numClicks, wineGlass.numClicks]
+      }
+    ]
+  };
+  var ctx = document.getElementById('chart').getContext('2d');
+  var myBarChart = new Chart(ctx).Bar(data);
+}
 
 displayThreeImages();

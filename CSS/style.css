@@ -1,14 +1,20 @@
-
-
 body {
 
 }
+
 img {
   width: 250px;
   height: auto;
+
 }
 
-.all-images {
-margin-left: 10px;
+#image-one, #image-two, #image-three {
+  float: left;
+  border: 2px solid #000;
+  margin: 5px;
+}
 
+#button-one, #button-two {
+  float: left;
+  margin: 10px;
 }
