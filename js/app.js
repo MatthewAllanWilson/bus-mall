@@ -36,8 +36,35 @@ function deleteThenDisplay (event) {
   document.getElementById('image-one').removeChild(imageOne);
   document.getElementById('image-two').removeChild(imageTwo);
   document.getElementById('image-three').removeChild(imageThree);
+
+  if (allTheClicks === 25){
+    revealButtons();
+  }
+  else if (allTheClicks === 35){
+    createChart();
+  }
+  else displayThreeImages();
+}
+
+function deleteButtons() {
+  document.getElementById('button-one').removeChild(buttonOne);
+  document.getElementById('button-two').removeChild(buttonTwo);
   displayThreeImages();
 }
+
+function revealButtons(){
+  document.getElementById('button-one').appendChild(buttonOne);
+  buttonOne.textContent = 'SEE RESULTS';
+  document.getElementById('button-two').appendChild(buttonTwo);
+  buttonTwo.textContent = 'MAKE 10 MORE SELECTIONS';
+  //console.log('You have made 25 selections.  Would you like to see the results or make 10 more selections?');
+}
+
+var buttonOne = document.createElement('button');
+buttonOne.addEventListener('click', createChart);
+
+var buttonTwo = document.createElement('button');
+buttonTwo.addEventListener('click', deleteButtons);
 
 function upTick (event) {
   for (var i = 0; i < pictureArray.length; i++)
@@ -89,3 +116,37 @@ var wineGlass = new ImageObject ('wineGlass', 'img/wine-glass.jpg');
 var pictureArray = [bubblegum, bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, sweep, tauntaun, unicorn, usb, waterCan, wineGlass];
 
 displayThreeImages();
+
+
+
+function createChart (){
+  console.log('This function will eventually create a chart.');
+
+
+
+
+  var data = {
+    labels: ['Bubble Gum', 'Bag', 'banana'],//, 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dogDuck', 'dragon', 'pen', 'petSweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'waterCan', 'wineGlass'],
+    datasets: [
+      {
+        label: 'Times Shown',
+              fillColor: "rgba(220,220,220,0.5)",
+              strokeColor: "rgba(220,220,220,0.8)",
+              highlightFill: "rgba(220,220,220,0.75)",
+              highlightStroke: "rgba(220,220,220,1)",
+        data: [bubblegum.numShown, bag.numShown, banana.numShown]
+      },
+          {
+              label: 'Times Clicked',
+              fillColor: "rgba(151,187,205,0.5)",
+              strokeColor: "rgba(151,187,205,0.8)",
+              highlightFill: "rgba(151,187,205,0.75)",
+              highlightStroke: "rgba(151,187,205,1)",
+              data: [bubblegum.numClicks, bag.numClicks, banana.numClicks]
+          }
+      ]
+  };
+  var ctx = document.getElementById('chart').getContext('2d');
+  var myBarChart = new Chart(ctx).Bar(data);
+
+}
