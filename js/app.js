@@ -18,13 +18,17 @@ function displayThreeImages (event) {
   document.getElementById('image-one').appendChild(imageOne);
   pictureNameOne.numShown++;
 
-  var pictureNameTwo = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)];
+  var pictureNameTwo = pictureNameOne;
+  while (pictureNameTwo === pictureNameOne) {
+    pictureNameTwo = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)]; }
   imageTwo.setAttribute('src', pictureNameTwo.path);
   imageTwo.setAttribute('class', pictureNameTwo.name);
   document.getElementById('image-two').appendChild(imageTwo);
   pictureNameTwo.numShown++;
 
-  var pictureNameThree = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)];
+  var pictureNameThree = pictureNameTwo;
+  while (pictureNameThree === pictureNameTwo || pictureNameThree === pictureNameOne) {
+    pictureNameThree = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)]; }
   imageThree.setAttribute('src', pictureNameThree.path);
   imageThree.setAttribute('class', pictureNameThree.name);
   document.getElementById('image-three').appendChild(imageThree);
