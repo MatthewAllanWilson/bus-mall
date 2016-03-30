@@ -39,23 +39,21 @@ function deleteThenDisplay (event) {
   displayThreeImages();
 }
 
-// function upTick (event) {
-//   for (var i = 0; i < pictureArray.length; i++) {}
-//
-//  if (pictureArray[i].name === imageOne.className)
-//  }
+function upTick (event) {
+  for (var i = 0; i < pictureArray.length; i++)
+    if (pictureArray[i].name === imageOne.className){
+      pictureArray[i].numClicks++;
+    }
+}
 
 var imageOneClick = document.getElementById('image-one');
-//imageOneClick.addEventListener('click,' upTick)
-//name.numClicks++
+imageOneClick.addEventListener('click', upTick);
 
 var imageTwoClick = document.getElementById('image-two');
-//imageTwoClick.addEventListener('click,' upTick)
-//name.numClicks++
+imageTwoClick.addEventListener('click', upTick);
 
 var imageThreeClick = document.getElementById('image-three');
-//imageThreeClick.addEventListener('click,' upTick)
-//name.numClicks++
+imageThreeClick.addEventListener('click', upTick);
 
 var imageDisplay = document.getElementById('image-display');
 imageDisplay.addEventListener('click', deleteThenDisplay);
