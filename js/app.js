@@ -41,6 +41,8 @@ function deleteThenDisplay (event) {
   document.getElementById('image-two').removeChild(imageTwo);
   document.getElementById('image-three').removeChild(imageThree);
 
+  saveClicksToLocal();
+
   if (allTheClicks === 25){
     revealButtons();
   }
@@ -69,21 +71,35 @@ buttonOne.addEventListener('click', createChart);
 var buttonTwo = document.createElement('button');
 buttonTwo.addEventListener('click', deleteButtons);
 
-function upTick (event) {
+function upTick1 (event) {
   for (var i = 0; i < pictureArray.length; i++)
     if (pictureArray[i].name === imageOne.className){
       pictureArray[i].numClicks++;
     }
 }
 
+function upTick2 (event) {
+  for (var i = 0; i < pictureArray.length; i++)
+    if (pictureArray[i].name === imageTwo.className){
+      pictureArray[i].numClicks++;
+    }
+}
+
+function upTick3 (event) {
+  for (var i = 0; i < pictureArray.length; i++)
+    if (pictureArray[i].name === imageThree.className){
+      pictureArray[i].numClicks++;
+    }
+}
+
 var imageOneClick = document.getElementById('image-one');
-imageOneClick.addEventListener('click', upTick);
+imageOneClick.addEventListener('click', upTick1);
 
 var imageTwoClick = document.getElementById('image-two');
-imageTwoClick.addEventListener('click', upTick);
+imageTwoClick.addEventListener('click', upTick2);
 
 var imageThreeClick = document.getElementById('image-three');
-imageThreeClick.addEventListener('click', upTick);
+imageThreeClick.addEventListener('click', upTick3);
 
 var imageDisplay = document.getElementById('image-display');
 imageDisplay.addEventListener('click', deleteThenDisplay);
@@ -146,4 +162,30 @@ function createChart (){
   var myBarChart = new Chart(ctx).Bar(data);
 }
 
+function saveClicksToLocal(){
+  localStorage.setItem('saveClicks', JSON.stringify(pictureArray));
+}
+
+var saveClicks = JSON.parse(localStorage.getItem('saveClicks'));
+
+function fetchClicksFromLocal(){
+  if (saveClicks){
+    console.log('User has saved their clicks from last time.');
+    for (var i = 0; i < pictureArray.length; i++) {
+      pictureArray[i].numClicks += saveClicks[i].numClicks;
+    }
+    for (var i = 0; i < pictureArray.length; i++) {
+      pictureArray[i].numShown += saveClicks[i].numShown;
+    }
+  }
+}
+
+function handleClearLS(){
+  localStorage.clear();
+}
+
+var clearLSButton = document.getElementById('clear-ls');
+clearLSButton.addEventListener('click', handleClearLS);
+
+fetchClicksFromLocal();
 displayThreeImages();
