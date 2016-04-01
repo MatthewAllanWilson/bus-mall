@@ -20,7 +20,8 @@ function displayThreeImages (event) {
 
   var pictureNameTwo = pictureNameOne;
   while (pictureNameTwo === pictureNameOne) {
-    pictureNameTwo = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)]; }
+    pictureNameTwo = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)];
+  }
   imageTwo.setAttribute('src', pictureNameTwo.path);
   imageTwo.setAttribute('class', pictureNameTwo.name);
   document.getElementById('image-two').appendChild(imageTwo);
@@ -28,7 +29,8 @@ function displayThreeImages (event) {
 
   var pictureNameThree = pictureNameTwo;
   while (pictureNameThree === pictureNameTwo || pictureNameThree === pictureNameOne) {
-    pictureNameThree = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)]; }
+    pictureNameThree = pictureArray[getRandomIntInclusive(0, pictureArray.length - 1)];
+  }
   imageThree.setAttribute('src', pictureNameThree.path);
   imageThree.setAttribute('class', pictureNameThree.name);
   document.getElementById('image-three').appendChild(imageThree);
@@ -71,21 +73,21 @@ buttonOne.addEventListener('click', createChart);
 var buttonTwo = document.createElement('button');
 buttonTwo.addEventListener('click', deleteButtons);
 
-function upTick1 (event) {
+function upTick1 () {
   for (var i = 0; i < pictureArray.length; i++)
     if (pictureArray[i].name === imageOne.className){
       pictureArray[i].numClicks++;
     }
 }
 
-function upTick2 (event) {
+function upTick2 () {
   for (var i = 0; i < pictureArray.length; i++)
     if (pictureArray[i].name === imageTwo.className){
       pictureArray[i].numClicks++;
     }
 }
 
-function upTick3 (event) {
+function upTick3 () {
   for (var i = 0; i < pictureArray.length; i++)
     if (pictureArray[i].name === imageThree.className){
       pictureArray[i].numClicks++;
@@ -114,28 +116,17 @@ function ImageObject (name, path) {
   pictureArray.push(this);
 }
 
-var bag = new ImageObject ('bag', 'img/bag.jpg');
-var banana = new ImageObject ('banana', 'img/banana.jpg');
-var bathroom = new ImageObject ('bathroom', 'img/bathroom.jpg');
-var boots = new ImageObject ('boots', 'img/boots.jpg');
-var breakfast = new ImageObject ('breakfast', 'img/breakfast.jpg');
-var bubblegum = new ImageObject ('bubblegum', 'img/bubblegum.jpg');
-var chair = new ImageObject ('chair', 'img/chair.jpg');
-var cthulhu = new ImageObject ('cthulhu', 'img/cthulhu.jpg');
-var dogDuck = new ImageObject ('dogDuck', 'img/dog-duck.jpg');
-var dragon = new ImageObject ('dragon', 'img/dragon.jpg');
-var pen = new ImageObject ('pen', 'img/pen.jpg');
-var petSweep = new ImageObject ('petSweep', 'img/pet-sweep.jpg');
-var scissors = new ImageObject ('scissors', 'img/scissors.jpg');
-var shark = new ImageObject ('shark', 'img/shark.jpg');
-var sweep = new ImageObject ('sweep', 'img/sweep.png');
-var tauntaun = new ImageObject ('tauntaun', 'img/tauntaun.jpg');
-var unicorn = new ImageObject ('unicorn', 'img/unicorn.jpg');
-var usb = new ImageObject ('usb', 'img/usb.gif');
-var waterCan = new ImageObject ('waterCan', 'img/water-can.jpg');
-var wineGlass = new ImageObject ('wineGlass', 'img/wine-glass.jpg');
-
 function createChart (){
+
+  var shownArray = [];
+  for (var i = 0; i < pictureArray.length; i++); {
+    shownArray.push(pictureArray[i].numShown);
+  }
+
+  var clicksArray = [];
+  for (var i = 0; i < pictureArray.length; i++); {
+    clicksArray.push(pictureArray[i].numClicks);
+  }
 
   var data = {
     labels: ['Bag', 'Banana', 'Bathroom', 'Boots', 'Breakfast', 'Bubblegum', 'Chair', 'Cthulhu', 'Dog Duck', 'Dragon', 'Pen', 'Pet Sweep', 'Scissors', 'Shark', 'Sweep', 'Tauntaun', 'Unicorn', 'USB', 'Water Can', 'Wine Glass'],
@@ -146,7 +137,8 @@ function createChart (){
         strokeColor: 'rgba(220,220,220,0.8)',
         highlightFill: 'rgba(220,220,220,0.75)',
         highlightStroke: 'rgba(220,220,220,1)',
-        data: [bag.numShown, banana.numShown, bathroom.numShown, boots.numShown, breakfast.numShown, bubblegum.numShown, chair.numShown, cthulhu.numShown, dogDuck.numShown, dragon.numShown, pen.numShown, petSweep.numShown, scissors.numShown, shark.numShown, sweep.numShown, tauntaun.numShown, unicorn.numShown, usb.numShown, waterCan.numShown, wineGlass.numShown]
+        data: shownArray
+          // bag.numShown, banana.numShown, bathroom.numShown, boots.numShown, breakfast.numShown, bubblegum.numShown, chair.numShown, cthulhu.numShown, dogDuck.numShown, dragon.numShown, pen.numShown, petSweep.numShown, scissors.numShown, shark.numShown, sweep.numShown, tauntaun.numShown, unicorn.numShown, usb.numShown, waterCan.numShown, wineGlass.numShown]
       },
       {
         label: 'Times Clicked',
@@ -154,7 +146,8 @@ function createChart (){
         strokeColor: 'rgba(151,187,205,0.8)',
         highlightFill: 'rgba(151,187,205,0.75)',
         highlightStroke: 'rgba(151,187,205,1)',
-        data: [bag.numClicks, banana.numClicks, bathroom.numClicks, boots.numClicks, breakfast.numClicks, bubblegum.numClicks, chair.numClicks, cthulhu.numClicks, dogDuck.numClicks, dragon.numClicks, pen.numClicks, petSweep.numClicks, scissors.numClicks, shark.numClicks, sweep.numClicks, tauntaun.numClicks, unicorn.numClicks, usb.numClicks, waterCan.numClicks, wineGlass.numClicks]
+        data: clicksArray
+        // data: [bag.numClicks, banana.numClicks, bathroom.numClicks, boots.numClicks, breakfast.numClicks, bubblegum.numClicks, chair.numClicks, cthulhu.numClicks, dogDuck.numClicks, dragon.numClicks, pen.numClicks, petSweep.numClicks, scissors.numClicks, shark.numClicks, sweep.numClicks, tauntaun.numClicks, unicorn.numClicks, usb.numClicks, waterCan.numClicks, wineGlass.numClicks]
       }
     ]
   };
@@ -163,20 +156,44 @@ function createChart (){
 }
 
 function saveClicksToLocal(){
-  localStorage.setItem('saveClicks', JSON.stringify(pictureArray));
+  localStorage.setItem('savedClicks', JSON.stringify(pictureArray));
+  localStorage.setItem('savedTotal', JSON.stringify(allTheClicks));
 }
 
-var saveClicks = JSON.parse(localStorage.getItem('saveClicks'));
-
 function fetchClicksFromLocal(){
-  if (saveClicks){
+  var savedTotal = JSON.parse(localStorage.getItem('savedTotal'));
+  allTheClicks = savedTotal;
+  var savedClicks = JSON.parse(localStorage.getItem('savedClicks'));
+  if (savedClicks){
     console.log('User has saved their clicks from last time.');
-    for (var i = 0; i < pictureArray.length; i++) {
-      pictureArray[i].numClicks += saveClicks[i].numClicks;
-    }
-    for (var i = 0; i < pictureArray.length; i++) {
-      pictureArray[i].numShown += saveClicks[i].numShown;
-    }
+    pictureArray = savedClicks;
+    // for (var i = 0; i < pictureArray.length; i++) {
+    //   pictureArray[i].numClicks += savedClicks[i].numClicks;
+    // }
+    // for (var i = 0; i < pictureArray.length; i++) {
+    //   pictureArray[i].numShown += savedClicks[i].numShown;
+    // }
+  } else {
+    var bag = new ImageObject ('bag', 'img/bag.jpg');
+    var banana = new ImageObject ('banana', 'img/banana.jpg');
+    var bathroom = new ImageObject ('bathroom', 'img/bathroom.jpg');
+    var boots = new ImageObject ('boots', 'img/boots.jpg');
+    var breakfast = new ImageObject ('breakfast', 'img/breakfast.jpg');
+    var bubblegum = new ImageObject ('bubblegum', 'img/bubblegum.jpg');
+    var chair = new ImageObject ('chair', 'img/chair.jpg');
+    var cthulhu = new ImageObject ('cthulhu', 'img/cthulhu.jpg');
+    var dogDuck = new ImageObject ('dogDuck', 'img/dog-duck.jpg');
+    var dragon = new ImageObject ('dragon', 'img/dragon.jpg');
+    var pen = new ImageObject ('pen', 'img/pen.jpg');
+    var petSweep = new ImageObject ('petSweep', 'img/pet-sweep.jpg');
+    var scissors = new ImageObject ('scissors', 'img/scissors.jpg');
+    var shark = new ImageObject ('shark', 'img/shark.jpg');
+    var sweep = new ImageObject ('sweep', 'img/sweep.png');
+    var tauntaun = new ImageObject ('tauntaun', 'img/tauntaun.jpg');
+    var unicorn = new ImageObject ('unicorn', 'img/unicorn.jpg');
+    var usb = new ImageObject ('usb', 'img/usb.gif');
+    var waterCan = new ImageObject ('waterCan', 'img/water-can.jpg');
+    var wineGlass = new ImageObject ('wineGlass', 'img/wine-glass.jpg');
   }
 }
 
