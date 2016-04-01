@@ -116,15 +116,15 @@ function ImageObject (name, path) {
   pictureArray.push(this);
 }
 
-function createChart (){
+var shownArray = [];
+var clicksArray = [];
 
-  var shownArray = [];
-  for (var i = 0; i < pictureArray.length; i++); {
+function createChart (){
+  for (var i = 0; i < pictureArray.length; i++) {
     shownArray.push(pictureArray[i].numShown);
   }
 
-  var clicksArray = [];
-  for (var i = 0; i < pictureArray.length; i++); {
+  for (var i = 0; i < pictureArray.length; i++) {
     clicksArray.push(pictureArray[i].numClicks);
   }
 
@@ -138,7 +138,6 @@ function createChart (){
         highlightFill: 'rgba(220,220,220,0.75)',
         highlightStroke: 'rgba(220,220,220,1)',
         data: shownArray
-          // bag.numShown, banana.numShown, bathroom.numShown, boots.numShown, breakfast.numShown, bubblegum.numShown, chair.numShown, cthulhu.numShown, dogDuck.numShown, dragon.numShown, pen.numShown, petSweep.numShown, scissors.numShown, shark.numShown, sweep.numShown, tauntaun.numShown, unicorn.numShown, usb.numShown, waterCan.numShown, wineGlass.numShown]
       },
       {
         label: 'Times Clicked',
@@ -147,7 +146,6 @@ function createChart (){
         highlightFill: 'rgba(151,187,205,0.75)',
         highlightStroke: 'rgba(151,187,205,1)',
         data: clicksArray
-        // data: [bag.numClicks, banana.numClicks, bathroom.numClicks, boots.numClicks, breakfast.numClicks, bubblegum.numClicks, chair.numClicks, cthulhu.numClicks, dogDuck.numClicks, dragon.numClicks, pen.numClicks, petSweep.numClicks, scissors.numClicks, shark.numClicks, sweep.numClicks, tauntaun.numClicks, unicorn.numClicks, usb.numClicks, waterCan.numClicks, wineGlass.numClicks]
       }
     ]
   };
@@ -167,12 +165,6 @@ function fetchClicksFromLocal(){
   if (savedClicks){
     console.log('User has saved their clicks from last time.');
     pictureArray = savedClicks;
-    // for (var i = 0; i < pictureArray.length; i++) {
-    //   pictureArray[i].numClicks += savedClicks[i].numClicks;
-    // }
-    // for (var i = 0; i < pictureArray.length; i++) {
-    //   pictureArray[i].numShown += savedClicks[i].numShown;
-    // }
   } else {
     var bag = new ImageObject ('bag', 'img/bag.jpg');
     var banana = new ImageObject ('banana', 'img/banana.jpg');
