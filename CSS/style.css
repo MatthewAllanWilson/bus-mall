@@ -1,20 +1,49 @@
 body {
-
+margin: 25px;
 }
 
 img {
   width: 250px;
-  height: auto;
+  height: 250px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  margin: 5px;
+}
 
+img:hover{
+  width: 300px;
+  height: 300px;
+  animation-name: pulse_animation;
+	animation-duration: 1000ms;
+	transform-origin: 70%;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulse_animation {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.12); }
+	100% { transform: scale(1); }
 }
 
 #image-one, #image-two, #image-three {
   float: left;
   border: 2px solid #000;
   margin: 5px;
+  border-radius: 10px;
 }
+
 
 #button-one, #button-two {
   float: left;
   margin: 10px;
+}
+
+button {
+  border-radius: 10px;
+}
+
+button:hover {
+background-color: grey;
+border-radius: 10px;
 }
